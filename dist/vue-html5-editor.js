@@ -1098,7 +1098,7 @@ RangeHandler.prototype.execCommand = function execCommand (command, arg) {
             break
         }
         case Command.INSERT_IMAGE: {
-            document.execCommand(Command.INSERT_IMAGE, false, arg);
+            document.execCommand(Command.INSERT_HTML, false, `<img src="${arg}" width="100%">`)
             break
         }
         case Command.CREATE_LINK: {
