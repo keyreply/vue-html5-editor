@@ -433,17 +433,17 @@ var dashboard$3 = {
             var config = this.$options.module.config;
 
             var formData = new FormData();
-            formData.append(config.upload.fieldName || 'image', file);
+            formData.append(config.upload.fieldName || 'image', file, 'images.jpg');
 
             if (typeof config.upload.params === 'object') {
                 Object.keys(config.upload.params).forEach(function (key) {
                     var value = config.upload.params[key];
                     if (Array.isArray(value)) {
                         value.forEach(function (v) {
-                            formData.append(key, v);
+                            formData.append(key, v, 'images.jpg');
                         });
                     } else {
-                        formData.append(key, value);
+                        formData.append(key, value, 'images.jpg');
                     }
                 });
             }
