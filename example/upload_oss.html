@@ -6,6 +6,8 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
     <script src="../dist/vue-html5-editor.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>
+    <!-- 引入在线资源 -->
+    <script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-6.1.1.min.js"></script>
     <link href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <style>
         #app {
@@ -33,19 +35,37 @@
     Vue.use(VueHtml5Editor, {
         showModuleName: true,
         image: {
+            upload: {
+                 url: '/api/apiins/Lesson/imagesUpload',
+                params: {},
+                fieldName: 'upfile',
+
+            },
             sizeLimit: 512 * 1024,
-            compress: true,
             width: 500,
             height: 500,
-            quality: 80
+            quality: 80,
+            aliOSSUpoad: (file) => {
+                let oss_sign = {"AccessKeySecret":"BLaEMe5KMJy5uQvfiQrSTk1mvtd5hzxg51K9qvBXijQw","AccessKeyId":"STS.NHWzbTjx733wbjYjR4WYwxnbX","Expiration":"2019-08-27T09:23:44Z","SecurityToken":"CAIS8wF1q6Ft5B2yfSjIr4viMdjgh6cWhPGcYEzojlJhW9Zbl6vJujz2IHFFdXZsB+wasvsxlGBZ7vkZlqBOcLJ\/cnflQu0oDjSyCqbkMeT7oMWQweEuqv\/MQBq+aXPS2MvVfJ+KLrf0ceusbFbpjzJ6xaCAGxypQ12iN+\/i6\/clFKN1ODO1dj1bHtxbCxJ\/ocsBTxvrOO2qLwThjxi7biMqmHIl0jMhtfzinJHDtUqD0Ayj8IJP+dSteKrDRtJ3IZJyX+2y2OFLbafb2EZSkUMbpfYp0PIYpWuY4IHNUgEOuA\/lOePF89toNxRjb60q4Hq2BUsJRpcagAGNNB+jj+3WyyH2AkyFB\/8K8YrQBsR021Xy2IZiPCx+jAeagi+nsaaArKIwcGKaPulKRJSxdPtFM9Tt1ar9lFRxsY7CDYzfhadhZZxh\/cyEFPwBiWw8cSZlndmhm16uh9zQ12DziuumJCQzaEXfHb+mrqs\/029j25X+rwyxVlfdQA=="}
+                let client = new OSS({
+                    accessKeyId: oss_sign.AccessKeyId,
+                    accessKeySecret: oss_sign.AccessKeySecret,
+                    stsToken: oss_sign.SecurityToken,
+                    endpoint: 'oss-cn-beijing.aliyuncs.com/',
+                    bucket: '120-bayin-vides-test',
+                });
+
+                return client.put('test_zha/' + oss_sign.AccessKeyId, file)
+            }
         }
+
     })
 
     new Vue({
         el: "#app",
         data: {
             content: "<h3>vue html5 editor</h3>",
-            showModuleName: true,
+            showModuleName: false,
         },
         methods: {
             updateData: function (data) {

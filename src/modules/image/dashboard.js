@@ -120,70 +120,82 @@ export default {
         },
         uploadToServer(file) {
             const config = this.$options.module.config
-
-            const formData = new FormData()
-            formData.append(config.upload.fieldName || 'image', file)
-
-            if (typeof config.upload.params === 'object') {
-                Object.keys(config.upload.params).forEach((key) => {
-                    const value = config.upload.params[key]
-                    if (Array.isArray(value)) {
-                        value.forEach((v) => {
-                            formData.append(key, v)
-                        })
-                    } else {
-                        formData.append(key, value)
-                    }
-                })
-            }
-
-            const xhr = new XMLHttpRequest()
-
-            xhr.onprogress = (e) => {
-                this.upload.status = 'progress'
-                if (e.lengthComputable) {
-                    this.upload.progressComputable = true
-                    const percentComplete = e.loaded / e.total
-                    this.upload.complete = (percentComplete * 100).toFixed(2)
-                } else {
-                    this.upload.progressComputable = false
-                }
-            }
-
-            xhr.onload = () => {
-                if (xhr.status >= 300) {
-                    this.setUploadError(`request error,code ${xhr.status}`)
-                    return
-                }
-
+            if (config.aliOSSUpoad) {
                 try {
-                    const url = config.uploadHandler(xhr.responseText)
-                    if (url) {
-                        this.$parent.execCommand(Command.INSERT_IMAGE, url)
-                    }
+                   config.aliOSSUpoad(file).then(res => {
+                        this.$parent.execCommand(Command.INSERT_IMAGE, res.url)
+                    });
                 } catch (err) {
                     this.setUploadError(err.toString())
                 } finally {
                     this.upload.status = 'ready'
                 }
             }
+            else {
+                const formData = new FormData()
+                formData.append(config.upload.fieldName || 'image', file)
 
-            xhr.onerror = () => {
-                // find network info in brower tools
-                this.setUploadError('request error')
-            }
-
-            xhr.onabort = () => {
-                this.upload.status = 'abort'
-            }
-
-            xhr.open('POST', config.upload.url)
-            if (typeof config.upload.headers === 'object') {
-                Object.keys(config.upload.headers).forEach((k) => {
-                    xhr.setRequestHeader(k, config.upload.headers[k])
+                if (typeof config.upload.params === 'object') {
+                    Object.keys(config.upload.params).forEach((key) => {
+                        const value = config.upload.params[key]
+                        if (Array.isArray(value)) {
+                        value.forEach((v) => {
+                            formData.append(key, v)
+                    })
+                    } else {
+                        formData.append(key, value)
+                    }
                 })
+                }
+
+                const xhr = new XMLHttpRequest()
+
+                xhr.onprogress = (e) => {
+                    this.upload.status = 'progress'
+                    if (e.lengthComputable) {
+                        this.upload.progressComputable = true
+                        const percentComplete = e.loaded / e.total
+                        this.upload.complete = (percentComplete * 100).toFixed(2)
+                    } else {
+                        this.upload.progressComputable = false
+                    }
+                }
+
+                xhr.onload = () => {
+                    if (xhr.status >= 300) {
+                        this.setUploadError(`request error,code ${xhr.status}`)
+                        return
+                    }
+
+                    try {
+                        const url = config.uploadHandler(xhr.responseText)
+                        if (url) {
+                            this.$parent.execCommand(Command.INSERT_IMAGE, url)
+                        }
+                    } catch (err) {
+                        this.setUploadError(err.toString())
+                    } finally {
+                        this.upload.status = 'ready'
+                    }
+                }
+
+                xhr.onerror = () => {
+                    // find network info in brower tools
+                    this.setUploadError('request error')
+                }
+
+                xhr.onabort = () => {
+                    this.upload.status = 'abort'
+                }
+
+                xhr.open('POST', config.upload.url)
+                if (typeof config.upload.headers === 'object') {
+                    Object.keys(config.upload.headers).forEach((k) => {
+                        xhr.setRequestHeader(k, config.upload.headers[k])
+                })
+                }
+                xhr.send(formData)
             }
-            xhr.send(formData)
         }
     }
 }

@@ -431,70 +431,82 @@ var dashboard$3 = {
             var this$1 = this;
 
             var config = this.$options.module.config;
-
-            var formData = new FormData();
-            formData.append(config.upload.fieldName || 'image', file, 'images.jpg');
-
-            if (typeof config.upload.params === 'object') {
-                Object.keys(config.upload.params).forEach(function (key) {
-                    var value = config.upload.params[key];
-                    if (Array.isArray(value)) {
-                        value.forEach(function (v) {
-                            formData.append(key, v, 'images.jpg');
-                        });
-                    } else {
-                        formData.append(key, value, 'images.jpg');
-                    }
-                });
-            }
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.onprogress = function (e) {
-                this$1.upload.status = 'progress';
-                if (e.lengthComputable) {
-                    this$1.upload.progressComputable = true;
-                    var percentComplete = e.loaded / e.total;
-                    this$1.upload.complete = (percentComplete * 100).toFixed(2);
-                } else {
-                    this$1.upload.progressComputable = false;
-                }
-            };
-
-            xhr.onload = function () {
-                if (xhr.status !== 200) {
-                    this$1.setUploadError(("request error,code " + (xhr.status)));
-                    return
-                }
-
+            if (config.aliOSSUpoad) {
                 try {
-                    var url = config.uploadHandler(xhr.responseText);
-                    if (url) {
-                        this$1.$parent.execCommand(Command.INSERT_IMAGE, url);
-                    }
+                    config.aliOSSUpoad(file).then(function (res) {
+                        this$1.$parent.execCommand(Command.INSERT_IMAGE, res.url);
+                    });
                 } catch (err) {
-                    this$1.setUploadError(err.toString());
+                    this.setUploadError(err.toString());
                 } finally {
-                    this$1.upload.status = 'ready';
+                    this.upload.status = 'ready';
                 }
-            };
-
-            xhr.onerror = function () {
-                // find network info in brower tools
-                this$1.setUploadError('request error');
-            };
-
-            xhr.onabort = function () {
-                this$1.upload.status = 'abort';
-            };
-
-            xhr.open('POST', config.upload.url);
-            if (typeof config.upload.headers === 'object') {
-                Object.keys(config.upload.headers).forEach(function (k) {
-                    xhr.setRequestHeader(k, config.upload.headers[k]);
-                });
             }
-            xhr.send(formData);
+            else {
+                var formData = new FormData();
+                formData.append(config.upload.fieldName || 'image', file);
+
+                if (typeof config.upload.params === 'object') {
+                    Object.keys(config.upload.params).forEach(function (key) {
+                        var value = config.upload.params[key];
+                        if (Array.isArray(value)) {
+                            value.forEach(function (v) {
+                                formData.append(key, v);
+                            });
+                        } else {
+                            formData.append(key, value);
+                        }
+                    });
+                }
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.onprogress = function (e) {
+                    this$1.upload.status = 'progress';
+                    if (e.lengthComputable) {
+                        this$1.upload.progressComputable = true;
+                        var percentComplete = e.loaded / e.total;
+                        this$1.upload.complete = (percentComplete * 100).toFixed(2);
+                    } else {
+                        this$1.upload.progressComputable = false;
+                    }
+                };
+
+                xhr.onload = function () {
+                    if (xhr.status >= 300) {
+                        this$1.setUploadError(("request error,code " + (xhr.status)));
+                        return
+                    }
+
+                    try {
+                        var url = config.uploadHandler(xhr.responseText);
+                        if (url) {
+                            this$1.$parent.execCommand(Command.INSERT_IMAGE, url);
+                        }
+                    } catch (err) {
+                        this$1.setUploadError(err.toString());
+                    } finally {
+                        this$1.upload.status = 'ready';
+                    }
+                };
+
+                xhr.onerror = function () {
+                    // find network info in brower tools
+                    this$1.setUploadError('request error');
+                };
+
+                xhr.onabort = function () {
+                    this$1.upload.status = 'abort';
+                };
+
+                xhr.open('POST', config.upload.url);
+                if (typeof config.upload.headers === 'object') {
+                    Object.keys(config.upload.headers).forEach(function (k) {
+                        xhr.setRequestHeader(k, config.upload.headers[k]);
+                    });
+                }
+                xhr.send(formData);
+            }
         }
     }
 };
