@@ -1357,6 +1357,9 @@ var editor = {
                 this$1.saveCurrentRange();
             }
         }, false);
+        content.addEventListener('input', function (e) {
+            this$1.$emit('change', e.target.innerHTML);
+        }, false);
         this.touchHandler = function (e) {
             if (content.contains(e.target)) {
                 this$1.saveCurrentRange();

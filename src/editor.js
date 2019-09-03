@@ -168,6 +168,9 @@ export default {
                 this.saveCurrentRange()
             }
         }, false)
+        content.addEventListener('input', function (e) {
+            this.$emit('change', e.target.innerHTML);
+        }, false);
         this.touchHandler = (e) => {
             if (content.contains(e.target)) {
                 this.saveCurrentRange()

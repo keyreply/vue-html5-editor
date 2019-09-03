@@ -24,7 +24,7 @@
         <button type="button" @click="reset">change content</button>
         <span style="white-space: nowrap">content length : {{content.length}}</span>
     </p>
-
+    {{content}}
     <vue-html5-editor :content="content" :height="300" :show-module-name="showModuleName"
                       @change="updateData" ref="editor"></vue-html5-editor>
 </div>

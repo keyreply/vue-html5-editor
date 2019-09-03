@@ -46,6 +46,7 @@
             height: 500,
             quality: 80,
             aliOSSUpoad: (file) => {
+                console.log('file:', file)
                 let oss_sign = {"AccessKeySecret":"BLaEMe5KMJy5uQvfiQrSTk1mvtd5hzxg51K9qvBXijQw","AccessKeyId":"STS.NHWzbTjx733wbjYjR4WYwxnbX","Expiration":"2019-08-27T09:23:44Z","SecurityToken":"CAIS8wF1q6Ft5B2yfSjIr4viMdjgh6cWhPGcYEzojlJhW9Zbl6vJujz2IHFFdXZsB+wasvsxlGBZ7vkZlqBOcLJ\/cnflQu0oDjSyCqbkMeT7oMWQweEuqv\/MQBq+aXPS2MvVfJ+KLrf0ceusbFbpjzJ6xaCAGxypQ12iN+\/i6\/clFKN1ODO1dj1bHtxbCxJ\/ocsBTxvrOO2qLwThjxi7biMqmHIl0jMhtfzinJHDtUqD0Ayj8IJP+dSteKrDRtJ3IZJyX+2y2OFLbafb2EZSkUMbpfYp0PIYpWuY4IHNUgEOuA\/lOePF89toNxRjb60q4Hq2BUsJRpcagAGNNB+jj+3WyyH2AkyFB\/8K8YrQBsR021Xy2IZiPCx+jAeagi+nsaaArKIwcGKaPulKRJSxdPtFM9Tt1ar9lFRxsY7CDYzfhadhZZxh\/cyEFPwBiWw8cSZlndmhm16uh9zQ12DziuumJCQzaEXfHb+mrqs\/029j25X+rwyxVlfdQA=="}
                 let client = new OSS({
                     accessKeyId: oss_sign.AccessKeyId,
