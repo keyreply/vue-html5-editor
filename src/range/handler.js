@@ -332,8 +332,6 @@ export default class RangeHandler {
         break;
       }
       case Command.SET_ID: {
-        console.log("SET_ID");
-        console.log(arg);
         const element = document.createElement("span");
         element.setAttribute("id", arg);
         this.range.surroundContents(element);

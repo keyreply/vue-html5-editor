@@ -1,7 +1,7 @@
 /**
  * Vue-html5-editor 1.1.0
  * https://github.com/PeakTai/vue-html5-editor
- * build at Fri Aug 28 2020 12:25:15 GMT+0800 (Singapore Standard Time)
+ * build at Fri Aug 28 2020 12:30:53 GMT+0800 (Singapore Standard Time)
  */
 
 (function (global, factory) {
@@ -1201,8 +1201,6 @@ RangeHandler.prototype.execCommand = function execCommand (command, arg) {
       break;
     }
     case Command.SET_ID: {
-      console.log("SET_ID");
-      console.log(arg);
       var element$1 = document.createElement("span");
       element$1.setAttribute("id", arg);
       this.range.surroundContents(element$1);
