@@ -122,16 +122,15 @@ export default {
             const config = this.$options.module.config
             if (config.aliOSSUpoad) {
                 try {
-                   config.aliOSSUpoad(file).then(res => {
+                   config.aliOSSUpoad(file).then((res) => {
                         this.$parent.execCommand(Command.INSERT_IMAGE, res.url)
-                    });
+                    })
                 } catch (err) {
                     this.setUploadError(err.toString())
                 } finally {
                     this.upload.status = 'ready'
                 }
-            }
-            else {
+            } else {
                 const formData = new FormData()
                 formData.append(config.upload.fieldName || 'image', file)
 

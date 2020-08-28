@@ -1,7 +1,7 @@
 /**
  * Vue-html5-editor 1.1.0
  * https://github.com/PeakTai/vue-html5-editor
- * build at Thu Apr 13 2017 15:51:01 GMT+0800 (CST)
+ * build at Fri Aug 28 2020 12:25:15 GMT+0800 (Singapore Standard Time)
  */
 
 (function (global, factory) {
@@ -10,7 +10,7 @@
 	(global.VueHtml5Editor = factory());
 }(this, (function () { 'use strict';
 
-function __$styleInject(css, returnValue) {
+function __$styleInject (css, returnValue) {
   if (typeof document === 'undefined') {
     return returnValue;
   }
@@ -18,12 +18,13 @@ function __$styleInject(css, returnValue) {
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
   style.type = 'text/css';
+  head.appendChild(style);
+  
   if (style.styleSheet){
     style.styleSheet.cssText = css;
   } else {
     style.appendChild(document.createTextNode(css));
   }
-  head.appendChild(style);
   return returnValue;
 }
 
@@ -156,36 +157,37 @@ var eraser = {
     }
 };
 
-var template$2 = "<div class=\"dashboard-font\" style=\"line-height: 36px\"> <div> <label>{{$parent.locale[\"heading\"]}}:</label> <button v-for=\"h in 6\" type=\"button\" @click=\"setHeading(h)\">H{{h}}</button> </div> <div> <label> {{$parent.locale[\"font name\"]}}: </label> <button v-for=\"name in nameList\" type=\"button\" @click=\"setFontName(name)\">{{name}}</button> </div> <div> <label> {{$parent.locale[\"font size\"]}}: </label> <button v-for=\"size in fontSizeList\" type=\"button\" @click=\"setFontSize(size)\">{{size}}</button> </div> <div> <label> {{$parent.locale[\"line height\"]}}: </label> <button v-for=\"lh in lineHeightList\" type=\"button\" @click=\"setLineHeight(lh)\"> {{lh}} </button> </div> </div>";
+var template$2 = "<div class=\"dashboard-font\" style=\"line-height: 36px;\"> <div> <label>{{$parent.locale[\"heading\"]}}:</label> <button v-for=\"h in 6\" type=\"button\" @click=\"setHeading(h)\">H{{h}}</button> </div> <div> <label> {{$parent.locale[\"font name\"]}}: </label> <button v-for=\"name in nameList\" type=\"button\" @click=\"setFontName(name)\">{{name}}</button> </div> <div> <label> {{$parent.locale[\"font size\"]}}: </label> <button v-for=\"size in fontSizeList\" type=\"button\" @click=\"setFontSize(size)\">{{size}}</button> </div> <div> <label> {{$parent.locale[\"line height\"]}}: </label> <button v-for=\"lh in lineHeightList\" type=\"button\" @click=\"setLineHeight(lh)\"> {{lh}} </button> </div> </div>";
 
 /**
  * Created by peak on 2017/2/14.
  */
 var Command = {
-    JUSTIFY_LEFT: 'justifyLeft',
-    JUSTIFY_CENTER: 'justifyCenter',
-    JUSTIFY_RIGHT: 'justifyRight',
-    FORE_COLOR: 'foreColor',
-    BACK_COLOR: 'backColor',
-    REMOVE_FORMAT: 'removeFormat',
-    FONT_NAME: 'fontName',
-    FONT_SIZE: 'fontSize',
-    FORMAT_BLOCK: 'formatBlock',
-    LINE_HEIGHT: 'lineHeight',
-    INSERT_HORIZONTAL_RULE: 'insertHorizontalRule',
-    INSERT_IMAGE: 'insertImage',
-    CREATE_LINK: 'createLink',
-    INSERT_ORDERED_LIST: 'insertOrderedList',
-    INSERT_UNORDERED_LIST: 'insertUnorderedList',
-    INSERT_HTML: 'insertHTML',
-    BOLD: 'bold',
-    ITALIC: 'italic',
-    UNDERLINE: 'underline',
-    STRIKE_THROUGH: 'strikeThrough',
-    SUBSCRIPT: 'subscript',
-    SUPERSCRIPT: 'superscript',
-    UNDO: 'undo',
-    UNLINK: 'unlink'
+  JUSTIFY_LEFT: 'justifyLeft',
+  JUSTIFY_CENTER: 'justifyCenter',
+  JUSTIFY_RIGHT: 'justifyRight',
+  FORE_COLOR: 'foreColor',
+  BACK_COLOR: 'backColor',
+  REMOVE_FORMAT: 'removeFormat',
+  FONT_NAME: 'fontName',
+  FONT_SIZE: 'fontSize',
+  FORMAT_BLOCK: 'formatBlock',
+  LINE_HEIGHT: 'lineHeight',
+  INSERT_HORIZONTAL_RULE: 'insertHorizontalRule',
+  INSERT_IMAGE: 'insertImage',
+  CREATE_LINK: 'createLink',
+  INSERT_ORDERED_LIST: 'insertOrderedList',
+  INSERT_UNORDERED_LIST: 'insertUnorderedList',
+  INSERT_HTML: 'insertHTML',
+  BOLD: 'bold',
+  ITALIC: 'italic',
+  UNDERLINE: 'underline',
+  STRIKE_THROUGH: 'strikeThrough',
+  SUBSCRIPT: 'subscript',
+  SUPERSCRIPT: 'superscript',
+  UNDO: 'undo',
+  UNLINK: 'unlink',
+  SET_ID: 'setId'
 };
 
 /**
@@ -307,7 +309,7 @@ var t=new Array(arguments.length-1);if(arguments.length>1){ for(var n=1;n<argume
 e.exports=window.lrz;}])});
 });
 
-var template$3 = "<div> <div v-show=\"upload.status=='ready'\"> <input type=\"text\" v-model=\"imageUrl\" maxlength=\"255\" :placeholder=\"$parent.locale['please enter a url']\"> <button type=\"button\" @click=\"insertImageUrl\">{{$parent.locale.save}}</button> <input type=\"file\" ref=\"file\" style=\"display: none !important\" @change=\"process\" accept=\"image/png,image/jpeg,image/gif,image/jpg\"> <button type=\"button\" @click=\"pick\">{{$parent.locale.upload}}</button> </div> <div v-if=\"upload.status=='progress'\"> {{$parent.locale.progress}}:{{upload.progressComputable ? $parent.locale.unknown : upload.complete}} </div> <div v-if=\"upload.status=='success'\"> {{$parent.locale[\"please wait\"]}}... </div> <div v-if=\"upload.status=='error'\"> {{$parent.locale.error}}:{{upload.errorMsg}} <button type=\"button\" @click=\"reset\">{{$parent.locale.reset}}</button> </div> <div v-if=\"upload.status=='abort'\"> {{$parent.locale.upload}}&nbsp;{{$parent.locale.abort}}, <button type=\"button\" @click=\"reset\">{{$parent.locale.reset}}</button> </div> </div> ";
+var template$3 = "<div> <div v-show=\"upload.status=='ready'\"> <input type=\"text\" v-model=\"imageUrl\" maxlength=\"255\" :placeholder=\"$parent.locale['please enter a url']\"> <button type=\"button\" @click=\"insertImageUrl\">{{$parent.locale.save}}</button> <input type=\"file\" ref=\"file\" style=\"display: none !important;\" @change=\"process\" accept=\"image/png,image/jpeg,image/gif,image/jpg\"> <button type=\"button\" @click=\"pick\">{{$parent.locale.upload}}</button> </div> <div v-if=\"upload.status=='progress'\"> {{$parent.locale.progress}}:{{upload.progressComputable ? $parent.locale.unknown : upload.complete}} </div> <div v-if=\"upload.status=='success'\"> {{$parent.locale[\"please wait\"]}}... </div> <div v-if=\"upload.status=='error'\"> {{$parent.locale.error}}:{{upload.errorMsg}} <button type=\"button\" @click=\"reset\">{{$parent.locale.reset}}</button> </div> <div v-if=\"upload.status=='abort'\"> {{$parent.locale.upload}}&nbsp;{{$parent.locale.abort}}, <button type=\"button\" @click=\"reset\">{{$parent.locale.reset}}</button> </div> </div> ";
 
 /**
  * Created by peak on 2017/2/10.
@@ -433,7 +435,7 @@ var dashboard$3 = {
             var config = this.$options.module.config;
             if (config.aliOSSUpoad) {
                 try {
-                    config.aliOSSUpoad(file).then(function (res) {
+                   config.aliOSSUpoad(file).then(function (res) {
                         this$1.$parent.execCommand(Command.INSERT_IMAGE, res.url);
                     });
                 } catch (err) {
@@ -441,8 +443,7 @@ var dashboard$3 = {
                 } finally {
                     this.upload.status = 'ready';
                 }
-            }
-            else {
+            } else {
                 var formData = new FormData();
                 formData.append(config.upload.fieldName || 'image', file);
 
@@ -450,13 +451,13 @@ var dashboard$3 = {
                     Object.keys(config.upload.params).forEach(function (key) {
                         var value = config.upload.params[key];
                         if (Array.isArray(value)) {
-                            value.forEach(function (v) {
-                                formData.append(key, v);
-                            });
-                        } else {
-                            formData.append(key, value);
-                        }
+                        value.forEach(function (v) {
+                            formData.append(key, v);
                     });
+                    } else {
+                        formData.append(key, value);
+                    }
+                });
                 }
 
                 var xhr = new XMLHttpRequest();
@@ -503,7 +504,7 @@ var dashboard$3 = {
                 if (typeof config.upload.headers === 'object') {
                     Object.keys(config.upload.headers).forEach(function (k) {
                         xhr.setRequestHeader(k, config.upload.headers[k]);
-                    });
+                });
                 }
                 xhr.send(formData);
             }
@@ -881,76 +882,80 @@ var isInlineElement = function (node) {
 
 // for IE 11
 if (!Text.prototype.contains) {
-    Text.prototype.contains = function contains(otherNode) {
-        return this === otherNode
-    };
+  Text.prototype.contains = function contains(otherNode) {
+    return this === otherNode;
+  };
 }
-
 
 /**
  * Created by peak on 2017/2/14.
  */
 var RangeHandler = function RangeHandler(range) {
-    if (!range || !(range instanceof Range)) {
-        throw new TypeError('cant\'t resolve range')
-    }
-    this.range = range;
+  if (!range || !(range instanceof Range)) {
+    throw new TypeError("cant't resolve range");
+  }
+  this.range = range;
 };
-
 
 /**
  * find all the text nodes in range
  */
 RangeHandler.prototype.getAllTextNodesInRange = function getAllTextNodesInRange () {
-    var startContainer = this.range.startContainer;
-    var endContainer = this.range.endContainer;
-    var rootEl = this.range.commonAncestorContainer;
-    var textNodes = [];
+  var startContainer = this.range.startContainer;
+  var endContainer = this.range.endContainer;
+  var rootEl = this.range.commonAncestorContainer;
+  var textNodes = [];
 
-    if (startContainer === endContainer) {
-        if (startContainer.nodeType === Node.TEXT_NODE) {
-            return [startContainer]
-        }
-        var childNodes = startContainer.childNodes;
-        for (var i = this.range.startOffset; i < this.range.endOffset; i++) {
-            mergeArray(textNodes, getDescendantTextNodes(childNodes[i]));
-        }
-        return textNodes
+  if (startContainer === endContainer) {
+    if (startContainer.nodeType === Node.TEXT_NODE) {
+      return [startContainer];
     }
+    var childNodes = startContainer.childNodes;
+    for (var i = this.range.startOffset; i < this.range.endOffset; i++) {
+      mergeArray(textNodes, getDescendantTextNodes(childNodes[i]));
+    }
+    return textNodes;
+  }
 
-    var startIndex = 0;
-    var endIndex = 0;
-    for (var i$1 = 0; i$1 < rootEl.childNodes.length; i$1++) {
-        var node = rootEl.childNodes[i$1];
-        if (node.contains(startContainer)) {
-            startIndex = i$1;
-        }
-        if (node.contains(endContainer)) {
-            endIndex = i$1;
-        }
+  var startIndex = 0;
+  var endIndex = 0;
+  for (var i$1 = 0; i$1 < rootEl.childNodes.length; i$1++) {
+    var node = rootEl.childNodes[i$1];
+    if (node.contains(startContainer)) {
+      startIndex = i$1;
     }
+    if (node.contains(endContainer)) {
+      endIndex = i$1;
+    }
+  }
 
-    for (var i$2 = startIndex; i$2 <= endIndex; i$2++) {
-        var node$1 = rootEl.childNodes[i$2];
-        if (i$2 === startIndex) {
-            if (node$1.nodeType === Node.TEXT_NODE) {
-                textNodes.push(node$1);
-            } else if (node$1.nodeType === Node.ELEMENT_NODE) {
-                mergeArray(textNodes, getAfterStartDescendantTextNodes(node$1, startContainer));
-            }
-        } else if (i$2 === endIndex) {
-            if (node$1.nodeType === Node.TEXT_NODE) {
-                textNodes.push(node$1);
-            } else if (node$1.nodeType === Node.ELEMENT_NODE) {
-                mergeArray(textNodes, getBeforeEndDescendantTextNodes(node$1, endContainer));
-            }
-        } else if (node$1.nodeType === Node.TEXT_NODE) {
-            textNodes.push(node$1);
-        } else if (node$1.nodeType === Node.ELEMENT_NODE) {
-            mergeArray(textNodes, getDescendantTextNodes(node$1));
-        }
+  for (var i$2 = startIndex; i$2 <= endIndex; i$2++) {
+    var node$1 = rootEl.childNodes[i$2];
+    if (i$2 === startIndex) {
+      if (node$1.nodeType === Node.TEXT_NODE) {
+        textNodes.push(node$1);
+      } else if (node$1.nodeType === Node.ELEMENT_NODE) {
+        mergeArray(
+          textNodes,
+          getAfterStartDescendantTextNodes(node$1, startContainer)
+        );
+      }
+    } else if (i$2 === endIndex) {
+      if (node$1.nodeType === Node.TEXT_NODE) {
+        textNodes.push(node$1);
+      } else if (node$1.nodeType === Node.ELEMENT_NODE) {
+        mergeArray(
+          textNodes,
+          getBeforeEndDescendantTextNodes(node$1, endContainer)
+        );
+      }
+    } else if (node$1.nodeType === Node.TEXT_NODE) {
+      textNodes.push(node$1);
+    } else if (node$1.nodeType === Node.ELEMENT_NODE) {
+      mergeArray(textNodes, getDescendantTextNodes(node$1));
     }
-    return textNodes
+  }
+  return textNodes;
 };
 
 /**
@@ -959,229 +964,258 @@ RangeHandler.prototype.getAllTextNodesInRange = function getAllTextNodesInRange 
  * @param arg
  */
 RangeHandler.prototype.execCommand = function execCommand (command, arg) {
-        var this$1 = this;
+    var this$1 = this;
 
-    switch (command) {
-
-        case Command.JUSTIFY_LEFT: {
-            document.execCommand(Command.JUSTIFY_LEFT, false, arg);
-            break
-        }
-
-        case Command.JUSTIFY_RIGHT: {
-            document.execCommand(Command.JUSTIFY_RIGHT, false, arg);
-            break
-        }
-
-        case Command.JUSTIFY_CENTER: {
-            document.execCommand(Command.JUSTIFY_CENTER, false, arg);
-            break
-        }
-
-        case Command.FORE_COLOR: {
-            document.execCommand(Command.FORE_COLOR, false, arg);
-            break
-        }
-        case Command.BACK_COLOR: {
-            document.execCommand(Command.BACK_COLOR, false, arg);
-            break
-        }
-        case Command.REMOVE_FORMAT: {
-            document.execCommand(Command.REMOVE_FORMAT, false, arg);
-            break
-        }
-        case Command.FONT_NAME: {
-            document.execCommand(Command.FONT_NAME, false, arg);
-            break
-        }
-        case Command.FONT_SIZE: {
-            // 重新实现，改为直接修改样式
-            var textNodes = this.getAllTextNodesInRange();
-            if (!textNodes.length) {
-                break
-            }
-            if (textNodes.length === 1 && textNodes[0] === this.range.startContainer
-                && textNodes[0] === this.range.endContainer) {
-                var textNode = textNodes[0];
-                if (this.range.startOffset === 0
-                    && this.range.endOffset === textNode.textContent.length) {
-                    if (textNode.parentNode.childNodes.length === 1
-                        && isInlineElement(textNode.parentNode)) {
-                        textNode.parentNode.style.fontSize = arg;
-                        break
-                    }
-                    var span = document.createElement('span');
-                    span.style.fontSize = arg;
-                    textNode.parentNode.insertBefore(span, textNode);
-                    span.appendChild(textNode);
-                    break
-                }
-                var span$1 = document.createElement('span');
-                span$1.innerText = textNode.textContent.substring(
-                    this.range.startOffset, this.range.endOffset);
-                span$1.style.fontSize = arg;
-                var frontPart = document.createTextNode(
-                    textNode.textContent.substring(0, this.range.startOffset));
-                textNode.parentNode.insertBefore(frontPart, textNode);
-                textNode.parentNode.insertBefore(span$1, textNode);
-                textNode.textContent = textNode.textContent.substring(this.range.endOffset);
-                this.range.setStart(span$1, 0);
-                this.range.setEnd(span$1, 1);
-                break
-            }
-
-            textNodes.forEach(function (textNode) {
-                if (textNode === this$1.range.startContainer) {
-                    if (this$1.range.startOffset === 0) {
-                        if (textNode.parentNode.childNodes.length === 1
-                            && isInlineElement(textNode.parentNode)) {
-                            textNode.parentNode.style.fontSize = arg;
-                        } else {
-                            var span$1 = document.createElement('span');
-                            span$1.style.fontSize = arg;
-                            textNode.parentNode.insertBefore(span$1, textNode);
-                            span$1.appendChild(textNode);
-                        }
-                        return
-                    }
-                    var span$2 = document.createElement('span');
-                    textNode.textContent = textNode.textContent.substring(
-                        0, this$1.range.startOffset);
-                    span$2.style.fontSize = arg;
-                    textNode.parentNode.insertBefore(span$2, textNode);
-                    this$1.range.setStart(textNode, 0);
-                    return
-                }
-                if (textNode === this$1.range.endContainer) {
-                    if (this$1.range.endOffset === textNode.textContent.length) {
-                        if (textNode.parentNode.childNodes.length === 1
-                            && isInlineElement(textNode.parentNode)) {
-                            textNode.parentNode.style.fontSize = arg;
-                        } else {
-                            var span$3 = document.createElement('span');
-                            span$3.style.fontSize = arg;
-                            textNode.parentNode.insertBefore(span$3, textNode);
-                            span$3.appendChild(textNode);
-                        }
-                        return
-                    }
-                    var span$4 = document.createElement('span');
-                    textNode.textContent = textNode.textContent.substring(this$1.range.endOffset);
-                    span$4.style.fontSize = arg;
-                    textNode.parentNode.insertBefore(span$4, textNode);
-                    span$4.appendChild(textNode);
-                    this$1.range.setStart(textNode, textNode.textContent.length);
-                    return
-                }
-                if (textNode.parentNode.childNodes.length === 1
-                    && isInlineElement(textNode.parentNode)) {
-                    textNode.parentNode.style.fontSize = arg;
-                    return
-                }
-
-                var span = document.createElement('span');
-                span.style.fontSize = arg;
-                textNode.parentNode.insertBefore(span, textNode);
-                span.appendChild(textNode);
-            });
-            break
-        }
-        case Command.FORMAT_BLOCK: {
-            if (document.execCommand(Command.FORMAT_BLOCK, false, arg)) {
-                break
-            }
-            // hack
-            var element = document.createElement(arg);
-            this.range.surroundContents(element);
-            break
-        }
-        case Command.LINE_HEIGHT: {
-            var textNodes$1 = this.getAllTextNodesInRange();
-            textNodes$1.forEach(function (textNode) {
-                var parentBlock = getParentBlockNode(textNode);
-                if (parentBlock) {
-                    parentBlock.style.lineHeight = arg;
-                }
-            });
-            break
-        }
-        case Command.INSERT_HORIZONTAL_RULE: {
-            document.execCommand(Command.INSERT_HORIZONTAL_RULE, false);
-            break
-        }
-        case Command.INSERT_IMAGE: {
-            document.execCommand(Command.INSERT_HTML, false, `<img src="${arg}" width="100%">`)
-            break
-        }
-        case Command.CREATE_LINK: {
-            document.execCommand(Command.CREATE_LINK, false, arg);
-            break
-        }
-        case Command.INSERT_ORDERED_LIST: {
-            document.execCommand(Command.INSERT_ORDERED_LIST, false, arg);
-            break
-        }
-        case Command.INSERT_UNORDERED_LIST: {
-            document.execCommand(Command.INSERT_UNORDERED_LIST, false, arg);
-            break
-        }
-        case Command.INSERT_HTML: {
-            if (document.execCommand(Command.INSERT_HTML, false, arg)) {
-                break
-            }
-            // hack
-            var fragment = document.createDocumentFragment();
-            var div = document.createElement('div');
-            div.innerHTML = arg;
-            if (div.hasChildNodes()) {
-                for (var i = 0; i < div.childNodes.length; i++) {
-                    fragment.appendChild(div.childNodes[i].cloneNode(true));
-                }
-            }
-            this.range.deleteContents();
-            this.range.insertNode(fragment);
-            break
-        }
-        case Command.BOLD: {
-            document.execCommand(Command.BOLD, false, arg);
-            break
-        }
-        case Command.ITALIC: {
-            document.execCommand(Command.ITALIC, false);
-            break
-        }
-        case Command.UNDERLINE: {
-            document.execCommand(Command.UNDERLINE, false);
-            break
-        }
-        case Command.STRIKE_THROUGH: {
-            document.execCommand(Command.STRIKE_THROUGH, false);
-            break
-        }
-        case Command.SUBSCRIPT: {
-            document.execCommand(Command.SUBSCRIPT, false);
-            break
-        }
-        case Command.SUPERSCRIPT: {
-            document.execCommand(Command.SUPERSCRIPT, false);
-            break
-        }
-        case Command.UNDO: {
-            document.execCommand(Command.UNDO, false);
-            break
-        }
-        case Command.UNLINK: {
-            document.execCommand(Command.UNLINK, false);
-            break
-        }
-        default: {
-            document.execCommand(command, false, arg);
-            break
-        }
+  switch (command) {
+    case Command.JUSTIFY_LEFT: {
+      document.execCommand(Command.JUSTIFY_LEFT, false, arg);
+      break;
     }
+
+    case Command.JUSTIFY_RIGHT: {
+      document.execCommand(Command.JUSTIFY_RIGHT, false, arg);
+      break;
+    }
+
+    case Command.JUSTIFY_CENTER: {
+      document.execCommand(Command.JUSTIFY_CENTER, false, arg);
+      break;
+    }
+
+    case Command.FORE_COLOR: {
+      document.execCommand(Command.FORE_COLOR, false, arg);
+      break;
+    }
+    case Command.BACK_COLOR: {
+      document.execCommand(Command.BACK_COLOR, false, arg);
+      break;
+    }
+    case Command.REMOVE_FORMAT: {
+      document.execCommand(Command.REMOVE_FORMAT, false, arg);
+      break;
+    }
+    case Command.FONT_NAME: {
+      document.execCommand(Command.FONT_NAME, false, arg);
+      break;
+    }
+    case Command.FONT_SIZE: {
+      // 重新实现，改为直接修改样式
+      var textNodes = this.getAllTextNodesInRange();
+      if (!textNodes.length) {
+        break;
+      }
+      if (
+        textNodes.length === 1 &&
+        textNodes[0] === this.range.startContainer &&
+        textNodes[0] === this.range.endContainer
+      ) {
+        var textNode = textNodes[0];
+        if (
+          this.range.startOffset === 0 &&
+          this.range.endOffset === textNode.textContent.length
+        ) {
+          if (
+            textNode.parentNode.childNodes.length === 1 &&
+            isInlineElement(textNode.parentNode)
+          ) {
+            textNode.parentNode.style.fontSize = arg;
+            break;
+          }
+          var span = document.createElement("span");
+          span.style.fontSize = arg;
+          textNode.parentNode.insertBefore(span, textNode);
+          span.appendChild(textNode);
+          break;
+        }
+        var span$1 = document.createElement("span");
+        span$1.innerText = textNode.textContent.substring(
+          this.range.startOffset,
+          this.range.endOffset
+        );
+        span$1.style.fontSize = arg;
+        var frontPart = document.createTextNode(
+          textNode.textContent.substring(0, this.range.startOffset)
+        );
+        textNode.parentNode.insertBefore(frontPart, textNode);
+        textNode.parentNode.insertBefore(span$1, textNode);
+        textNode.textContent = textNode.textContent.substring(
+          this.range.endOffset
+        );
+        this.range.setStart(span$1, 0);
+        this.range.setEnd(span$1, 1);
+        break;
+      }
+
+      textNodes.forEach(function (textNode) {
+        if (textNode === this$1.range.startContainer) {
+          if (this$1.range.startOffset === 0) {
+            if (
+              textNode.parentNode.childNodes.length === 1 &&
+              isInlineElement(textNode.parentNode)
+            ) {
+              textNode.parentNode.style.fontSize = arg;
+            } else {
+              var span$1 = document.createElement("span");
+              span$1.style.fontSize = arg;
+              textNode.parentNode.insertBefore(span$1, textNode);
+              span$1.appendChild(textNode);
+            }
+            return;
+          }
+          var span$2 = document.createElement("span");
+          textNode.textContent = textNode.textContent.substring(
+            0,
+            this$1.range.startOffset
+          );
+          span$2.style.fontSize = arg;
+          textNode.parentNode.insertBefore(span$2, textNode);
+          this$1.range.setStart(textNode, 0);
+          return;
+        }
+        if (textNode === this$1.range.endContainer) {
+          if (this$1.range.endOffset === textNode.textContent.length) {
+            if (
+              textNode.parentNode.childNodes.length === 1 &&
+              isInlineElement(textNode.parentNode)
+            ) {
+              textNode.parentNode.style.fontSize = arg;
+            } else {
+              var span$3 = document.createElement("span");
+              span$3.style.fontSize = arg;
+              textNode.parentNode.insertBefore(span$3, textNode);
+              span$3.appendChild(textNode);
+            }
+            return;
+          }
+          var span$4 = document.createElement("span");
+          textNode.textContent = textNode.textContent.substring(
+            this$1.range.endOffset
+          );
+          span$4.style.fontSize = arg;
+          textNode.parentNode.insertBefore(span$4, textNode);
+          span$4.appendChild(textNode);
+          this$1.range.setStart(textNode, textNode.textContent.length);
+          return;
+        }
+        if (
+          textNode.parentNode.childNodes.length === 1 &&
+          isInlineElement(textNode.parentNode)
+        ) {
+          textNode.parentNode.style.fontSize = arg;
+          return;
+        }
+
+        var span = document.createElement("span");
+        span.style.fontSize = arg;
+        textNode.parentNode.insertBefore(span, textNode);
+        span.appendChild(textNode);
+      });
+      break;
+    }
+    case Command.FORMAT_BLOCK: {
+      if (document.execCommand(Command.FORMAT_BLOCK, false, arg)) {
+        break;
+      }
+      // hack
+      var element = document.createElement(arg);
+      this.range.surroundContents(element);
+      break;
+    }
+    case Command.LINE_HEIGHT: {
+      var textNodes$1 = this.getAllTextNodesInRange();
+      textNodes$1.forEach(function (textNode) {
+        var parentBlock = getParentBlockNode(textNode);
+        if (parentBlock) {
+          parentBlock.style.lineHeight = arg;
+        }
+      });
+      break;
+    }
+    case Command.INSERT_HORIZONTAL_RULE: {
+      document.execCommand(Command.INSERT_HORIZONTAL_RULE, false);
+      break;
+    }
+    case Command.INSERT_IMAGE: {
+      document.execCommand(Command.INSERT_IMAGE, false, arg);
+      break;
+    }
+    case Command.CREATE_LINK: {
+      document.execCommand(Command.CREATE_LINK, false, arg);
+      break;
+    }
+    case Command.INSERT_ORDERED_LIST: {
+      document.execCommand(Command.INSERT_ORDERED_LIST, false, arg);
+      break;
+    }
+    case Command.INSERT_UNORDERED_LIST: {
+      document.execCommand(Command.INSERT_UNORDERED_LIST, false, arg);
+      break;
+    }
+    case Command.INSERT_HTML: {
+      if (document.execCommand(Command.INSERT_HTML, false, arg)) {
+        break;
+      }
+      // hack
+      var fragment = document.createDocumentFragment();
+      var div = document.createElement("div");
+      div.innerHTML = arg;
+      if (div.hasChildNodes()) {
+        for (var i = 0; i < div.childNodes.length; i++) {
+          fragment.appendChild(div.childNodes[i].cloneNode(true));
+        }
+      }
+      this.range.deleteContents();
+      this.range.insertNode(fragment);
+      break;
+    }
+    case Command.BOLD: {
+      document.execCommand(Command.BOLD, false, arg);
+      break;
+    }
+    case Command.ITALIC: {
+      document.execCommand(Command.ITALIC, false);
+      break;
+    }
+    case Command.UNDERLINE: {
+      document.execCommand(Command.UNDERLINE, false);
+      break;
+    }
+    case Command.STRIKE_THROUGH: {
+      document.execCommand(Command.STRIKE_THROUGH, false);
+      break;
+    }
+    case Command.SUBSCRIPT: {
+      document.execCommand(Command.SUBSCRIPT, false);
+      break;
+    }
+    case Command.SUPERSCRIPT: {
+      document.execCommand(Command.SUPERSCRIPT, false);
+      break;
+    }
+    case Command.UNDO: {
+      document.execCommand(Command.UNDO, false);
+      break;
+    }
+    case Command.UNLINK: {
+      document.execCommand(Command.UNLINK, false);
+      break;
+    }
+    case Command.SET_ID: {
+      console.log("SET_ID");
+      console.log(arg);
+      var element$1 = document.createElement("span");
+      element$1.setAttribute("id", arg);
+      this.range.surroundContents(element$1);
+      break;
+    }
+    default: {
+      document.execCommand(command, false, arg);
+      break;
+    }
+  }
 };
 
-__$styleInject(".vue-html5-editor,.vue-html5-editor *{box-sizing:border-box;-webkit-user-select:text;}.vue-html5-editor{font-size:14px;line-height:1.5;background-color:#fff;color:#333;border:1px solid #ddd;text-align:left;border-radius:5px;overflow:hidden}.vue-html5-editor.full-screen{position:fixed!important;top:0!important;left:0!important;bottom:0!important;right:0!important;border-radius:0}.vue-html5-editor>.toolbar{position:relative;background-color:inherit}.vue-html5-editor>.toolbar>ul{list-style:none;padding:0;margin:0;border-bottom:1px solid #ddd}.vue-html5-editor>.toolbar>ul>li{display:inline-block;cursor:pointer;text-align:center;line-height:36px;padding:0 10px}.vue-html5-editor>.toolbar>ul>li .icon{height:16px;width:16px;display:inline-block;vertical-align:middle}.vue-html5-editor>.toolbar>.dashboard{background-color:inherit;border-bottom:1px solid #ddd;padding:10px;position:absolute;top:100%;left:0;right:0;overflow:auto}.vue-html5-editor>.toolbar>.dashboard input[type=text],.vue-html5-editor>.toolbar>.dashboard input[type=number],.vue-html5-editor>.toolbar>.dashboard select{padding:6px 12px;color:inherit;background-color:transparent;border:1px solid #ddd;border-radius:5px}.vue-html5-editor>.toolbar>.dashboard input[type=text]:hover,.vue-html5-editor>.toolbar>.dashboard input[type=number]:hover,.vue-html5-editor>.toolbar>.dashboard select:hover{border-color:#bebebe}.vue-html5-editor>.toolbar>.dashboard input[type=text][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=text][readonly],.vue-html5-editor>.toolbar>.dashboard input[type=number][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=number][readonly],.vue-html5-editor>.toolbar>.dashboard select[disabled],.vue-html5-editor>.toolbar>.dashboard select[readonly]{background-color:#eee;opacity:1}.vue-html5-editor>.toolbar>.dashboard input[type=text][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=number][disabled],.vue-html5-editor>.toolbar>.dashboard select[disabled]{cursor:not-allowed}.vue-html5-editor>.toolbar>.dashboard button{color:inherit;background-color:inherit;padding:6px 12px;white-space:nowrap;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:1px solid #ddd;border-radius:5px;margin-right:4px;margin-bottom:4px}.vue-html5-editor>.toolbar>.dashboard button:hover{border-color:#bebebe}.vue-html5-editor>.toolbar>.dashboard button[disabled]{cursor:not-allowed;opacity:.68}.vue-html5-editor>.toolbar>.dashboard button:last-child{margin-right:0}.vue-html5-editor>.toolbar>.dashboard label{font-weight:bolder}.vue-html5-editor>.content{overflow:auto;padding:10px;-webkit-user-select:text;}.vue-html5-editor>.content:focus{outline:0}",undefined);
+__$styleInject(".vue-html5-editor{font-size:14px;line-height:1.5;background-color:#fff;color:#333;border:1px solid #ddd;text-align:left;border-radius:5px;overflow:hidden;box-sizing:border-box}.vue-html5-editor *{box-sizing:border-box;-webkit-user-select:text}.vue-html5-editor.full-screen{position:fixed!important;top:0!important;left:0!important;bottom:0!important;right:0!important;border-radius:0}.vue-html5-editor>.toolbar{position:relative;background-color:inherit}.vue-html5-editor>.toolbar>ul{list-style:none;padding:0;margin:0;border-bottom:1px solid #ddd}.vue-html5-editor>.toolbar>ul>li{display:inline-block;cursor:pointer;text-align:center;line-height:36px;padding:0 10px}.vue-html5-editor>.toolbar>ul>li .icon{height:16px;width:16px;display:inline-block;vertical-align:middle}.vue-html5-editor>.toolbar>.dashboard{background-color:inherit;border-bottom:1px solid #ddd;padding:10px;position:absolute;top:100%;left:0;right:0;overflow:auto}.vue-html5-editor>.toolbar>.dashboard input[type=number],.vue-html5-editor>.toolbar>.dashboard select{padding:6px 12px;color:inherit;background-color:transparent;border:1px solid #ddd;border-radius:5px}.vue-html5-editor>.toolbar>.dashboard input[type=number]:hover,.vue-html5-editor>.toolbar>.dashboard input[type=text]:hover,.vue-html5-editor>.toolbar>.dashboard select:hover{border-color:#bebebe}.vue-html5-editor>.toolbar>.dashboard input[type=number][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=number][readonly],.vue-html5-editor>.toolbar>.dashboard input[type=text][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=text][readonly],.vue-html5-editor>.toolbar>.dashboard select[disabled],.vue-html5-editor>.toolbar>.dashboard select[readonly]{background-color:#eee;opacity:1}.vue-html5-editor>.toolbar>.dashboard input[type=number][disabled],.vue-html5-editor>.toolbar>.dashboard input[type=text][disabled],.vue-html5-editor>.toolbar>.dashboard select[disabled]{cursor:not-allowed}.vue-html5-editor>.toolbar>.dashboard button{color:inherit;background-color:inherit;padding:6px 12px;white-space:nowrap;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border:1px solid #ddd;border-radius:5px;margin-right:4px;margin-bottom:4px}.vue-html5-editor>.toolbar>.dashboard button:hover{border-color:#bebebe}.vue-html5-editor>.toolbar>.dashboard button[disabled]{cursor:not-allowed;opacity:.68}.vue-html5-editor>.toolbar>.dashboard button:last-child{margin-right:0}.vue-html5-editor>.toolbar>.dashboard label{font-weight:bolder}.vue-html5-editor>.content{overflow:auto;padding:10px;-webkit-user-select:text}.vue-html5-editor>.content:focus{outline:0}@media (max-width:767px){.vue-html5-editor{margin-bottom:5px;width:100%!important}button:last-child,input[type=number]:last-child,input[type=text]:last-child,label:last-child,select:last-child{margin-bottom:0}}button:last-child,input:last-child,label:last-child,select:last-child{margin-right:0}",undefined);
 
 var template$9 = "<div class=\"vue-html5-editor\" :class=\"{'full-screen':fullScreen}\" :style=\"{'z-index':zIndex}\"> <div class=\"toolbar\" :style=\"{'z-index':zIndex+1}\" ref=\"toolbar\"> <ul> <template v-for=\"module in modules\"> <li :title=\"locale[module.i18n]\" @click=\"activeModule(module)\"> <span class=\"icon\" :class=\"module.icon\"></span> <template v-if=\"showModuleName === undefined ? defaultShowModuleName : showModuleName\"> &nbsp;{{locale[module.i18n]}} </template> </li> </template> </ul> <div class=\"dashboard\" v-show=\"dashboard\" ref=\"dashboard\"> <keep-alive> <div v-show=\"dashboard\" :is=\"dashboard\"></div> </keep-alive> </div> </div> <div class=\"content\" ref=\"content\" :style=\"contentStyle\" contenteditable @click=\"toggleDashboard(dashboard)\"> </div> </div>";
 
@@ -1228,6 +1262,7 @@ var editor = {
             if (val !== content) {
                 this.$refs.content.innerHTML = val;
             }
+            this.$emit('update:content', val);
         },
         fullScreen: function fullScreen(val){
             var component = this;
@@ -1358,7 +1393,7 @@ var editor = {
             }
         }, false);
         content.addEventListener('input', function (e) {
-            this$1.$emit('change', e.target.innerHTML);
+            this.$emit('change', e.target.innerHTML);
         }, false);
         this.touchHandler = function (e) {
             if (content.contains(e.target)) {
