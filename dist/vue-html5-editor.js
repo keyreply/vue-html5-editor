@@ -1,7 +1,7 @@
 /**
  * Vue-html5-editor 1.1.0
  * https://github.com/PeakTai/vue-html5-editor
- * build at Fri Aug 28 2020 12:30:53 GMT+0800 (Singapore Standard Time)
+ * build at Tue Sep 01 2020 11:01:53 GMT+0800 (Singapore Standard Time)
  */
 
 (function (global, factory) {
@@ -1221,202 +1221,219 @@ var template$9 = "<div class=\"vue-html5-editor\" :class=\"{'full-screen':fullSc
  * Created by peak on 2017/2/9.
  */
 var editor = {
-    template: template$9,
-    props: {
-        content: {
-            type: String,
-            required: true,
-            default: ''
-        },
-        height: {
-            type: Number,
-            default: 300,
-            validator: function validator(val){
-                return val >= 100
-            }
-        },
-        zIndex: {
-            type: Number,
-            default: 1000
-        },
-        autoHeight: {
-            type: Boolean,
-            default: true
-        },
-        showModuleName: {}
+  template: template$9,
+  props: {
+    content: {
+      type: String,
+      required: true,
+      default: "",
     },
-    data: function data(){
-        return {
-            // defaultShowModuleName:false
-            // locale: {},
-            // modules:{},
-            fullScreen: false,
-            dashboard: null
-        }
+    height: {
+      type: Number,
+      default: 300,
+      validator: function validator(val) {
+        return val >= 100;
+      },
     },
-    watch: {
-        content: function content(val) {
-            var content = this.$refs.content.innerHTML;
-            if (val !== content) {
-                this.$refs.content.innerHTML = val;
-            }
-            this.$emit('update:content', val);
-        },
-        fullScreen: function fullScreen(val){
-            var component = this;
-            if (val) {
-                component.parentEl = component.$el.parentNode;
-                component.nextEl = component.$el.nextSibling;
-                document.body.appendChild(component.$el);
-                return
-            }
-            if (component.nextEl) {
-                component.parentEl.insertBefore(component.$el, component.nextEl);
-                return
-            }
-            component.parentEl.appendChild(component.$el);
-        }
+    zIndex: {
+      type: Number,
+      default: 1000,
     },
-    computed: {
-        contentStyle: function contentStyle(){
-            var style = {};
-            if (this.fullScreen) {
-                style.height = (window.innerHeight - this.$refs.toolbar.clientHeight - 1) + "px";
-                return style
-            }
-            if (!this.autoHeight) {
-                style.height = (this.height) + "px";
-                return style
-            }
-            style['min-height'] = (this.height) + "px";
-            return style
-        }
+    autoHeight: {
+      type: Boolean,
+      default: true,
     },
-    methods: {
-        toggleFullScreen: function toggleFullScreen(){
-            this.fullScreen = !this.fullScreen;
-        },
-        enableFullScreen: function enableFullScreen(){
-            this.fullScreen = true;
-        },
-        exitFullScreen: function exitFullScreen(){
-            this.fullScreen = false;
-        },
-        focus: function focus(){
-            this.$refs.content.focus();
-        },
-        toggleDashboard: function toggleDashboard(dashboard){
-            this.dashboard = this.dashboard === dashboard ? null : dashboard;
-        },
-        execCommand: function execCommand(command, arg){
-            this.restoreSelection();
-            if (this.range) {
-                new RangeHandler(this.range).execCommand(command, arg);
-            }
-            this.toggleDashboard();
-            this.$emit('change', this.$refs.content.innerHTML);
-        },
-        getCurrentRange: function getCurrentRange(){
-            return this.range
-        },
-        saveCurrentRange: function saveCurrentRange(){
-            var this$1 = this;
+    showModuleName: {},
+  },
+  data: function data() {
+    return {
+      // defaultShowModuleName:false
+      // locale: {},
+      // modules:{},
+      fullScreen: false,
+      dashboard: null,
+    };
+  },
+  watch: {
+    content: function content(val) {
+      var content = this.$refs.content.innerHTML;
+      if (val !== content) {
+        this.$refs.content.innerHTML = val;
+      }
+      console.log("watch", val);
+      this.$emit("update:content", val);
+    },
+    fullScreen: function fullScreen(val) {
+      var component = this;
+      if (val) {
+        component.parentEl = component.$el.parentNode;
+        component.nextEl = component.$el.nextSibling;
+        document.body.appendChild(component.$el);
+        return;
+      }
+      if (component.nextEl) {
+        component.parentEl.insertBefore(component.$el, component.nextEl);
+        return;
+      }
+      component.parentEl.appendChild(component.$el);
+    },
+  },
+  computed: {
+    contentStyle: function contentStyle() {
+      var style = {};
+      if (this.fullScreen) {
+        style.height = (window.innerHeight - this.$refs.toolbar.clientHeight - 1) + "px";
+        return style;
+      }
+      if (!this.autoHeight) {
+        style.height = (this.height) + "px";
+        return style;
+      }
+      style["min-height"] = (this.height) + "px";
+      return style;
+    },
+  },
+  methods: {
+    toggleFullScreen: function toggleFullScreen() {
+      this.fullScreen = !this.fullScreen;
+    },
+    enableFullScreen: function enableFullScreen() {
+      this.fullScreen = true;
+    },
+    exitFullScreen: function exitFullScreen() {
+      this.fullScreen = false;
+    },
+    focus: function focus() {
+      this.$refs.content.focus();
+    },
+    toggleDashboard: function toggleDashboard(dashboard) {
+      this.dashboard = this.dashboard === dashboard ? null : dashboard;
+    },
+    execCommand: function execCommand(command, arg) {
+      this.restoreSelection();
+      if (this.range) {
+        new RangeHandler(this.range).execCommand(command, arg);
+      }
+      this.toggleDashboard();
+      this.$emit("change", this.$refs.content.innerHTML);
+    },
+    getCurrentRange: function getCurrentRange() {
+      return this.range;
+    },
+    saveCurrentRange: function saveCurrentRange() {
+      var this$1 = this;
 
-            var selection = window.getSelection ? window.getSelection() : document.getSelection();
-            if (!selection.rangeCount) {
-                return
-            }
-            var content = this.$refs.content;
-            for (var i = 0; i < selection.rangeCount; i++) {
-                var range = selection.getRangeAt(0);
-                var start = range.startContainer;
-                var end = range.endContainer;
-                // for IE11 : node.contains(textNode) always return false
-                start = start.nodeType === Node.TEXT_NODE ? start.parentNode : start;
-                end = end.nodeType === Node.TEXT_NODE ? end.parentNode : end;
-                if (content.contains(start) && content.contains(end)) {
-                    this$1.range = range;
-                    break
-                }
-            }
-        },
-        restoreSelection: function restoreSelection(){
-            var selection = window.getSelection ? window.getSelection() : document.getSelection();
-            selection.removeAllRanges();
-            if (this.range) {
-                selection.addRange(this.range);
-            } else {
-                var content = this.$refs.content;
-                var div = document.createElement('div');
-                var range = document.createRange();
-                content.appendChild(div);
-                range.setStart(div, 0);
-                range.setEnd(div, 0);
-                selection.addRange(range);
-                this.range = range;
-            }
-        },
-        activeModule: function activeModule(module){
-            if (typeof module.handler === 'function') {
-                module.handler(this);
-                return
-            }
-            if (module.hasDashboard) {
-                this.toggleDashboard(("dashboard-" + (module.name)));
-            }
+      var selection = window.getSelection
+        ? window.getSelection()
+        : document.getSelection();
+      if (!selection.rangeCount) {
+        return;
+      }
+      var content = this.$refs.content;
+      for (var i = 0; i < selection.rangeCount; i++) {
+        var range = selection.getRangeAt(0);
+        var start = range.startContainer;
+        var end = range.endContainer;
+        // for IE11 : node.contains(textNode) always return false
+        start = start.nodeType === Node.TEXT_NODE ? start.parentNode : start;
+        end = end.nodeType === Node.TEXT_NODE ? end.parentNode : end;
+        if (content.contains(start) && content.contains(end)) {
+          this$1.range = range;
+          break;
         }
+      }
     },
-    created: function created(){
-        var this$1 = this;
-
-        this.modules.forEach(function (module) {
-            if (typeof module.init === 'function') {
-                module.init(this$1);
-            }
-        });
-    },
-    mounted: function mounted(){
-        var this$1 = this;
-
+    restoreSelection: function restoreSelection() {
+      var selection = window.getSelection
+        ? window.getSelection()
+        : document.getSelection();
+      selection.removeAllRanges();
+      if (this.range) {
+        selection.addRange(this.range);
+      } else {
         var content = this.$refs.content;
-        content.innerHTML = this.content;
-        content.addEventListener('mouseup', this.saveCurrentRange, false);
-        content.addEventListener('keyup', function () {
-            this$1.$emit('change', content.innerHTML);
-            this$1.saveCurrentRange();
-        }, false);
-        content.addEventListener('mouseout', function (e) {
-            if (e.target === content) {
-                this$1.saveCurrentRange();
-            }
-        }, false);
-        content.addEventListener('input', function (e) {
-            this.$emit('change', e.target.innerHTML);
-        }, false);
-        this.touchHandler = function (e) {
-            if (content.contains(e.target)) {
-                this$1.saveCurrentRange();
-            }
-        };
-
-        window.addEventListener('touchend', this.touchHandler, false);
+        var div = document.createElement("div");
+        var range = document.createRange();
+        content.appendChild(div);
+        range.setStart(div, 0);
+        range.setEnd(div, 0);
+        selection.addRange(range);
+        this.range = range;
+      }
     },
-    updated: function updated(){
-        // update dashboard style
-        if (this.$refs.dashboard){
-            this.$refs.dashboard.style.maxHeight = (this.$refs.content.clientHeight) + "px";
+    activeModule: function activeModule(module) {
+      if (typeof module.handler === "function") {
+        module.handler(this);
+        return;
+      }
+      if (module.hasDashboard) {
+        this.toggleDashboard(("dashboard-" + (module.name)));
+      }
+    },
+  },
+  created: function created() {
+    var this$1 = this;
+
+    this.modules.forEach(function (module) {
+      if (typeof module.init === "function") {
+        module.init(this$1);
+      }
+    });
+  },
+  mounted: function mounted() {
+    var this$1 = this;
+
+    var content = this.$refs.content;
+    content.innerHTML = this.content;
+    content.addEventListener("mouseup", this.saveCurrentRange, false);
+    content.addEventListener(
+      "keyup",
+      function () {
+        this$1.$emit("change", content.innerHTML);
+        this$1.saveCurrentRange();
+      },
+      false
+    );
+    content.addEventListener(
+      "mouseout",
+      function (e) {
+        if (e.target === content) {
+          this$1.saveCurrentRange();
         }
-    },
-    beforeDestroy: function beforeDestroy(){
-        var this$1 = this;
+      },
+      false
+    );
+    content.addEventListener(
+      "input",
+      function (e) {
+        this$1.$emit("change", e.target.innerHTML);
+      },
+      false
+    );
+    this.touchHandler = function (e) {
+      if (content.contains(e.target)) {
+        this$1.saveCurrentRange();
+      }
+    };
 
-        window.removeEventListener('touchend', this.touchHandler);
-        this.modules.forEach(function (module) {
-            if (typeof module.destroyed === 'function') {
-                module.destroyed(this$1);
-            }
-        });
+    window.addEventListener("touchend", this.touchHandler, false);
+  },
+  updated: function updated() {
+    // update dashboard style
+    if (this.$refs.dashboard) {
+      this.$refs.dashboard.style.maxHeight = (this.$refs.content.clientHeight) + "px";
     }
+  },
+  beforeDestroy: function beforeDestroy() {
+    var this$1 = this;
+
+    window.removeEventListener("touchend", this.touchHandler);
+    this.modules.forEach(function (module) {
+      if (typeof module.destroyed === "function") {
+        module.destroyed(this$1);
+      }
+    });
+  },
 };
 
 var i18nZhCn = {
