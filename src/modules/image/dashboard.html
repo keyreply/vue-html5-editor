@@ -2,7 +2,7 @@
 
     <div v-show="upload.status=='ready'">
 
-        <input type="text" v-model="imageUrl" maxlength="255" :placeholder="$parent.locale['please enter a url']">
+        <input type="text" v-model="imageUrl" :placeholder="$parent.locale['please enter a url']">
         <button type="button" @click="insertImageUrl">{{$parent.locale.save}}</button>
 
         <input type="file" ref="file" style="display: none !important;" @change="process"
