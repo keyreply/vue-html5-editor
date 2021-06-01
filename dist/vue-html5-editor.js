@@ -1,7 +1,7 @@
 /**
  * Vue-html5-editor 1.1.0
  * https://github.com/PeakTai/vue-html5-editor
- * build at Tue Sep 01 2020 11:01:53 GMT+0800 (Singapore Standard Time)
+ * build at Tue Jun 01 2021 16:21:58 GMT+0700 (Indochina Time)
  */
 
 (function (global, factory) {
@@ -27,7 +27,6 @@ function __$styleInject (css, returnValue) {
   }
   return returnValue;
 }
-
 var polyfill = function () {
     // https://tc39.github.io/ecma262/#sec-array.prototype.includes
     if (!Array.prototype.includes) {
